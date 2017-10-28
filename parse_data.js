@@ -6,6 +6,7 @@ $(document).ready(function() {
         success: function(data) {
             console.log('hi');
             var fce = processData(data);
+
             var params = {'id': '15112'};
 
             var courses = getEntries(fce, params);
