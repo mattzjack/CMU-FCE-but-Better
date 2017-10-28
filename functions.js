@@ -1,5 +1,7 @@
 // INTERFACE
 
+// var params = {'id': '', 'instr': '', 'sem': '', 'yr': '', 'yrs': '', 'yre': ''};
+
 function getEntries(fce, params) {
     // returns a list of entry objects with attributes
     // if (filtersHasIDp(params)) {
@@ -9,6 +11,13 @@ function getEntries(fce, params) {
     if (!('instr' in params)) params['instr'] = '';
     if (!('sem' in params)) params['sem'] = '';
     if (!('yr' in params)) params['yr'] = '';
+    if (!('yrs' in params)) params['yrs'] = '';
+    if (!('yre' in params)) params['yre'] = '';
+    else {
+        var yrs = Number(params['yrs']), yre = Number(params['yre']);
+        params['yrse'] = [];
+        for (i = yrs; i <= yre; i++) params.push(i);
+    }
     console.log(params);
     return getEntriesLinear(fce, params);
 }
@@ -62,6 +71,15 @@ function getInstr(entry) {
     return entry[2];
 }
 
+function isSubstring (s2, s1) {
+    if (s1 == s2) return true;
+    var len = s1.length;
+    for (var i = 0; i < s2.length - s1.length; i ++) {
+        if (s2.substring (i, i + len) == s1) return true;
+    }
+    return false;
+}
+
 function getEntriesLinear(fce, params) {
 
     var result = [], satisfied;
@@ -70,13 +88,13 @@ function getEntriesLinear(fce, params) {
         if (params['id'] != '' && getIDNum(fce[i]) != Number(params['id'])) {
             satisfied = false;
         }
-        if (params['sem'] != '' && getSem(fce[i]) != params['sem']) {
+        if (params['sem'] != '' && !isSubstring (getSem(fce[i]), params['sem'])) {
             satisfied = false;
         }
-        if (params['yr'] != '' && getYrNum(fce[i]) != Number(params['yr'])) {
+        if (params['yrs'] != '' && params['yre'] != '' && ((getYrNum(fce[i]) > Number(params['yre'])) || getYrNum(fce[i]) < Number(params['yrs']))) {
             satisfied = false;
         }
-        if (params['instr'] != '' && getInstr(fce[i]) != params['instr']) {
+        if (params['instr'] != '' && !isSubstring (getSem(fce[i]), params['instr'])) {
             satisfied = false;
         }
         if (satisfied) result.push(fce[i]);
