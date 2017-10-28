@@ -5,10 +5,10 @@ function getEntries(fce, params) {
     // if (filtersHasIDp(params)) {
     //     return getEntriesBinary(fce, params);
     // }
-    if (!('id' in params)) params['id'] = '';
-    if (!('instr' in params)) params['instr'] = '';
-    if (!('sem' in params)) params['sem'] = '';
-    if (!('yr' in params)) params['yr'] = '';
+    if (!'id' in params) params['id'] = '';
+    if (!'instr' in params) params['instr'] = '';
+    if (!'sem' in params) params['sem'] = '';
+    if (!'yr' in params) params['yr'] = '';
     console.log(params);
     return getEntriesLinear(fce, params);
 }
