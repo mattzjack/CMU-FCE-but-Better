@@ -2,9 +2,9 @@
 
 function getEntries(fce, params) {
     // returns a list of entry objects with attributes
-    if (filtersHasIDp(params)) {
-        return getEntriesBinary(fce, params);
-    }
+    // if (filtersHasIDp(params)) {
+    //     return getEntriesBinary(fce, params);
+    // }
     return getEntriesLinear(fce, params);
 }
 
@@ -45,6 +45,16 @@ function getIDNum(entry) {
     return Number(entry[4]);
 }
 
+function getEntriesLinear(fce, params) {
+    var result = []
+    for (i = 0; i < fce.length; i++) {
+        if (getIDNum(fce[i]) == Number(params['id'])) {
+            result.push(fce[i])
+        }
+    }
+    return result;
+}
+
 function getEntriesBinary(fce, params) {
     var result = [], loc = binarySearch(fce, Number(params['id']), compareNum, get);
     if (loc == -1) return result;
@@ -52,11 +62,11 @@ function getEntriesBinary(fce, params) {
     var i = 1, done = false;
     while (!done) {
         done = true;
-        if (getIDNum(fce[loc - i]) == params['id']) {
+        if (getIDNum(fce[loc - i]) == Number(params['id'])) {
             done = false;
             result.push(fce[loc - i])
         }
-        if (getIDNum(fce[loc + i]) == params['id']) {
+        if (getIDNum(fce[loc + i]) == Number(params['id'])) {
             done = false;
             result.push(fce[loc - i])
         }
