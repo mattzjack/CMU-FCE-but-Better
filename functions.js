@@ -5,6 +5,10 @@ function getEntries(fce, params) {
     // if (filtersHasIDp(params)) {
     //     return getEntriesBinary(fce, params);
     // }
+    if (!'id' in params) params['id'] = '';
+    if (!'instr' in params) params['instr'] = '';
+    if (!'sem' in params) params['sem'] = '';
+    if (!'yr' in params) params['yr'] = '';
     return getEntriesLinear(fce, params);
 }
 
@@ -45,12 +49,36 @@ function getIDNum(entry) {
     return Number(entry[4]);
 }
 
+function getSem(entry) {
+    return entry[0];
+}
+
+function getYrNum(entry) {
+    return Number(entry[1]);
+}
+
+function getInstr(entry) {
+    return entry[2];
+}
+
 function getEntriesLinear(fce, params) {
-    var result = [];
+
+    var result = [], satisfied;
     for (i = 0; i < fce.length; i++) {
-        if (getIDNum(fce[i]) == Number(params['id'])) {
-            result.push(fce[i]);
+        satisfied = true;
+        if (params['id'] != '' && getIDNum(fce[i]) != Number(params['id'])) {
+            satisfied = false;
         }
+        if (params['sem'] != '' && getSem(fce[i]) != params['sem']) {
+            satisfied = false;
+        }
+        if (params['yr'] != '' && getYrNum(fce[i]) != Number(params['yr'])) {
+            satisfied = false;
+        }
+        if (params['instr'] != '' && getInstr(fce[i]) != params['instr']) {
+            satisfied = false;
+        }
+        if (satisfied) result.push(fce[i]);
     }
     return result;
 }
