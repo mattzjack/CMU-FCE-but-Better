@@ -46,10 +46,10 @@ function getIDNum(entry) {
 }
 
 function getEntriesLinear(fce, params) {
-    var result = []
+    var result = [];
     for (i = 0; i < fce.length; i++) {
         if (getIDNum(fce[i]) == Number(params['id'])) {
-            result.push(fce[i])
+            result.push(fce[i]);
         }
     }
     return result;
@@ -163,5 +163,5 @@ function quicksort(arr, start, end, compare, get, set, swap) {
     if (end - start < 2) return;
     var pivot = partition(arr, start, end, compare, get, set, swap);
     quicksort(arr, start, pivot, compare, get, set, swap);
-    quicksort(arr, pivot + 1, end, compare, get, set, swap);   
+    quicksort(arr, pivot + 1, end, compare, get, set, swap);
 }
