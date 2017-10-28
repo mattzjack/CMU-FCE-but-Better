@@ -7,6 +7,7 @@ function getEntries(fce, params) {
     // if (filtersHasIDp(params)) {
     //     return getEntriesBinary(fce, params);
     // }
+<<<<<<< HEAD
     if (!('id' in params)) params['id'] = '';
     if (!('instr' in params)) params['instr'] = '';
     if (!('sem' in params)) params['sem'] = '';
@@ -18,6 +19,12 @@ function getEntries(fce, params) {
         params['yrse'] = [];
         for (i = yrs; i <= yre; i++) params.push(i);
     }
+=======
+    if (!'id' in params) params['id'] = '';
+    if (!'instr' in params) params['instr'] = '';
+    if (!'sem' in params) params['sem'] = '';
+    if (!'yr' in params) params['yr'] = '';
+>>>>>>> origin/master
     console.log(params);
     return getEntriesLinear(fce, params);
 }
