@@ -73,7 +73,7 @@ $(document).ready(function() {
     var hashf = hash (myChart.data.datasets.label);
     for (var i = 0; i < objs.length; i ++) {
         var hashyval = hashf(objs[i].course);
-        addData (myChart, objs[i].course, hashyval, objs[i].id + objs.instr, 0);
+        addData (myChart, objs[i].course, hashyval, objs[i].id + objs[i].instr, 0);
     }
 
 
