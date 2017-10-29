@@ -1,22 +1,4 @@
 $(document).ready(function() {
-    $("#params").submit(function(event) {
-        var id = $("#params").find("input[name=\"id\"]").val(),
-            instr = $("#params").find("input[name=\"instr\"]").val().toUpperCase(),
-            yrs = $("#params").find("input[name=\"yrs\"]").val(),
-            yre = $("#params").find("input[name=\"yre\"]").val(),
-            sem = $("#params").find("input[name=\"sem\"]").val();
-        var params = {"id": id,
-                      "instr": instr,
-                      "sem": sem, "yrs": yrs, "yre": yre};
-
-
-        doData(params);
-
-        event.preventDefault();
-    });
-}
-
-function doData(params) {
     $.ajax({
         type: 'GET',
         url: './SurveyResults-SchoolComputerScience-allyears.csv',
@@ -25,9 +7,9 @@ function doData(params) {
             console.log('hi');
             var fce = processData(data);
 
-            // var params = {'id': '15112'};
+            var params = {'id': '15112'};
 
-            var courses = getEntriesLinear(fce, params);
+            var courses = getEntries(fce, params);
                 var ctx = "myChart";
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -61,8 +43,8 @@ function doData(params) {
     }
 
     function hash (yaxis) {
-        if (yaxis == "Hours Spent Per Week") {
-            var colors = function (yval) {return 'rgba(' + Math.floor(51 * yval / 7) + ', ' + Math.floor(51 * yval / 7) + ', ' + Math.floor(51 * yval / 7) + ', 0.2)';}
+        if (yaxis == "Response rate") {
+            var colors = function (yval) {return 'rgba(' + (51 * yval / 20) + ', ' + (51 * yval / 20) + ', ' + (51 * yval / 20) + ', 0.2)';}
         }
         else {
             var colors = function (yval) {return 'rgba(' + Math.floor(51.0 * (5 - yval)) + ', ' + Math.floor(51.0 * (yval)) + ', ' + Math.floor(51.0 * (5 - 0.3 * yval)) + ', 0.2)';}
@@ -85,17 +67,13 @@ function doData(params) {
     }
 
 
-    setLabel(myChart, 'Hours Spent Per Week', 0);
-    setLabel(myChart, 'Overall Teaching Rating', 1);
-    setLabel(myChart, 'Overall Course Rating', 2);
+    setLabel(myChart, 'Overall course rating', 0);
     var objs = matrixToObjects (courses);
 
     var hashf = hash (myChart.data.datasets.label);
     for (var i = 0; i < objs.length; i ++) {
-        var instrName = ((objs[i].instr).split(" "))[1];
-        addData (myChart, objs[i].hrs, hashf(objs[i].hrs), objs[i].id + instrName, 0);
-        addData (myChart, objs[i].teach, hashf(objs[i].teach), objs[i].id + instrName, 1);
-        addData (myChart, objs[i].course, hashf(objs[i].course), objs[i].id + instrName, 2);
+        var hashyval = hashf(objs[i].course);
+        addData (myChart, objs[i].course, hashyval, objs[i].id + objs.instr, 0);
     }
 
 
